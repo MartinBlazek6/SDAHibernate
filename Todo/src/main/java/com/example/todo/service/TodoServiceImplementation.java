@@ -1,6 +1,7 @@
 package com.example.todo.service;
 
 
+import com.example.todo.model.Todo;
 import com.example.todo.repo.ToDoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,7 @@ public class TodoServiceImplementation implements TodoService{
         toDoRepository.findById(id).get().setTitle(title + " <- edited");
         toDoRepository.findById(id).get().setUrgent(isUrgent);
         toDoRepository.saveAndFlush(toDoRepository.findById(id).get());
+
+        toDoRepository.save(new Todo("ale nezabudni",true));
     }
 }
