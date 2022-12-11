@@ -15,4 +15,12 @@ public class TodoServiceImplementation implements TodoService{
     public void deleteTodo(Long id) {
         toDoRepository.deleteById(id);
     }
+
+    @Override
+    public void updateTodo(Long id, String title, Boolean isUrgent, Boolean isDone) {
+        toDoRepository.findById(id).get().setDone(isDone);
+        toDoRepository.findById(id).get().setTitle(title + " <- edited");
+        toDoRepository.findById(id).get().setUrgent(isUrgent);
+        toDoRepository.saveAndFlush(toDoRepository.findById(id).get());
+    }
 }

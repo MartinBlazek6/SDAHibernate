@@ -2,6 +2,8 @@ package com.example.todo.controller;
 
 import com.example.todo.model.Todo;
 import com.example.todo.repo.ToDoRepository;
+import com.example.todo.service.TodoService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequiredArgsConstructor
 public class TodoController {
 
     private final ToDoRepository toDoRepository;
+    private final TodoService todoService;
 
-    public TodoController(ToDoRepository toDoRepository) {
-        this.toDoRepository = toDoRepository;
-    }
 
     //@ResponseBody
     @GetMapping({"/todo", "/"})
@@ -58,10 +59,7 @@ public class TodoController {
 
     @PostMapping("/update/{id}")
     public String postUpdate(@RequestParam String title, boolean done, boolean urgent, @PathVariable Long id) {
-        toDoRepository.findById(id).get().setDone(done);
-        toDoRepository.findById(id).get().setTitle(title);
-        toDoRepository.findById(id).get().setUrgent(urgent);
-        toDoRepository.save(toDoRepository.findById(id).get());
+        todoService.updateTodo(id,title,urgent,done);
         return "redirect:/todo";
     }
 
