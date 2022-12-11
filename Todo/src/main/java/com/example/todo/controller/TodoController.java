@@ -48,7 +48,7 @@ public class TodoController {
 
     @GetMapping("/todo/add")
     public String getTodo() {
-        return "todo_add";
+        return "todo_app";
     }
 
     @GetMapping("/update")
